@@ -3,7 +3,6 @@ import sys
 import numpy as np
 import pandas as pd
 import bitarray as ba
-from subprocess import Popen,PIPE
 import gc
 
 class Plink(object):
@@ -56,16 +55,12 @@ class Plink(object):
 
 	def read_bim(self):
 
-		N=int(Popen(['wc','-l',os.path.join(self.path,self.name +'.bim')], stdout=PIPE).communicate()[0].split(' ')[0])
-
-		print('Number of Probes {} in {}'.format(N,file+'.bim'))
-		self.N_probes=N
-
 		self.bim = pd.read_table(os.path.join(self.path,file +'.bim'), sep='\t', header=None, names=['CHR', 'ID', 'distance', 'bp', 'allele1', 'allele2'],
 								 dtype={'names': ['CHR', 'ID', 'distance', 'bp', 'allele1', 'allele2'],
 										'formats': [int, 'S', int, int, 'S', 'S']}, iterator=True)
 
-
+		self.N_probes = self.bim.shape[0]
+		print('Number of Probes {} in {}'.format(self.N_probes, file + '.bim'))
 
 	def get_fam(self):
 		return self.fam
