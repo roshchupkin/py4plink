@@ -55,12 +55,12 @@ class Plink(object):
 
 	def read_bim(self):
 
-		self.bim = pd.read_table(os.path.join(self.path,file +'.bim'), sep='\t', header=None, names=['CHR', 'ID', 'distance', 'bp', 'allele1', 'allele2'],
+		self.bim = pd.read_table(os.path.join(self.path,self.name +'.bim'), sep='\t', header=None, names=['CHR', 'ID', 'distance', 'bp', 'allele1', 'allele2'],
 								 dtype={'names': ['CHR', 'ID', 'distance', 'bp', 'allele1', 'allele2'],
 										'formats': [int, 'S', int, int, 'S', 'S']}, iterator=True)
 
 		self.N_probes = self.bim.shape[0]
-		print('Number of Probes {} in {}'.format(self.N_probes, file + '.bim'))
+		print('Number of Probes {} in {}'.format(self.N_probes, self.name + '.bim'))
 
 	def get_fam(self):
 		return self.fam
